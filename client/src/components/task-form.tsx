@@ -17,13 +17,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, PlusCircle } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
+import { useState } from "react";
 
-export default function TaskForm() {
+interface TaskFormProps {
+  categories: string[];
+  onAddCategory: (category: string) => void;
+}
+
+export default function TaskForm({ categories, onAddCategory }: TaskFormProps) {
   const { toast } = useToast();
+  const [newCategory, setNewCategory] = useState("");
+
   const form = useForm<InsertTask>({
     resolver: zodResolver(insertTaskSchema),
     defaultValues: {
@@ -48,6 +56,14 @@ export default function TaskForm() {
       });
     },
   });
+
+  const handleAddCategory = () => {
+    if (newCategory.trim()) {
+      onAddCategory(newCategory.trim());
+      form.setValue("category", newCategory.trim());
+      setNewCategory("");
+    }
+  };
 
   return (
     <Card>
@@ -78,7 +94,7 @@ export default function TaskForm() {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea {...field} />
+                    <Textarea {...field} value={field.value || ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -143,9 +159,37 @@ export default function TaskForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Category</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <div className="flex gap-2">
+                      <Select onValueChange={field.onChange} value={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select category" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {categories.map((category) => (
+                            <SelectItem key={category} value={category}>
+                              {category}
+                            </SelectItem>
+                          ))}
+                          <SelectItem value="new" className="text-primary font-medium">
+                            + Add new category
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    {field.value === "new" && (
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          value={newCategory}
+                          onChange={(e) => setNewCategory(e.target.value)}
+                          placeholder="Enter new category"
+                        />
+                        <Button type="button" size="icon" onClick={handleAddCategory}>
+                          <PlusCircle className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}

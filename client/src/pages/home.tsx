@@ -16,6 +16,14 @@ export default function Home() {
     category: "all",
   });
 
+  const [categories, setCategories] = useState<string[]>([
+    "default",
+    "work",
+    "personal",
+    "shopping",
+    "health",
+  ]);
+
   const { data: tasks = [], isLoading } = useQuery<Task[]>({
     queryKey: ["/api/tasks"],
   });
@@ -39,6 +47,12 @@ export default function Home() {
     reorderMutation.mutate(items.map(task => task.id));
   };
 
+  const addCategory = (newCategory: string) => {
+    if (!categories.includes(newCategory)) {
+      setCategories(prev => [...prev, newCategory]);
+    }
+  };
+
   const filteredTasks = tasks.filter(task => {
     if (filters.status !== "all" && task.status !== filters.status) return false;
     if (filters.priority !== "all" && task.priority !== filters.priority) return false;
@@ -50,11 +64,15 @@ export default function Home() {
     <div className="min-h-screen bg-[#F7F7F7] text-[#2C2C2C] p-6">
       <div className="max-w-6xl mx-auto space-y-8">
         <h1 className="text-4xl font-bold text-[#635FC7]">Tasks</h1>
-        
+
         <div className="grid gap-6 md:grid-cols-[300px_1fr]">
           <div className="space-y-6">
-            <TaskForm />
-            <TaskFilters filters={filters} setFilters={setFilters} />
+            <TaskForm categories={categories} onAddCategory={addCategory} />
+            <TaskFilters 
+              filters={filters} 
+              setFilters={setFilters} 
+              categories={categories}
+            />
           </div>
 
           <DragDropContext onDragEnd={onDragEnd}>

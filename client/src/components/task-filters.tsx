@@ -9,9 +9,10 @@ interface TaskFiltersProps {
     category: string;
   };
   setFilters: (filters: any) => void;
+  categories: string[];
 }
 
-export default function TaskFilters({ filters, setFilters }: TaskFiltersProps) {
+export default function TaskFilters({ filters, setFilters, categories }: TaskFiltersProps) {
   return (
     <Card>
       <CardHeader>
@@ -65,9 +66,11 @@ export default function TaskFilters({ filters, setFilters }: TaskFiltersProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              <SelectItem value="default">Default</SelectItem>
-              <SelectItem value="work">Work</SelectItem>
-              <SelectItem value="personal">Personal</SelectItem>
+              {categories.map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
