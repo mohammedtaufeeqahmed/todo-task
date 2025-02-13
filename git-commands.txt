@@ -1,0 +1,29 @@
+# Git initialization commands for your Todo App
+
+# Initialize a new Git repository
+git init
+
+# Add all files to staging
+git add .
+
+# Create initial commit
+git commit -m "Initial commit: Todo application with drag-and-drop functionality"
+
+# To add a remote repository (replace with your repository URL)
+# git remote add origin <your-repository-url>
+
+# Push to main branch (after adding remote)
+# git push -u origin main
+
+# Additional useful commands:
+# Check status
+# git status
+
+# View commit history
+# git log
+
+# Create and switch to a new branch
+# git checkout -b feature/new-feature
+
+# Switch between branches
+# git checkout main
