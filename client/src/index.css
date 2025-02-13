@@ -11,3 +11,8 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+
+.dark body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}

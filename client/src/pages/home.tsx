@@ -5,6 +5,7 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import TaskList from "@/components/task-list";
 import TaskForm from "@/components/task-form";
 import TaskFilters from "@/components/task-filters";
+import ThemeToggle from "@/components/theme-toggle";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -61,9 +62,12 @@ export default function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-[#F7F7F7] text-[#2C2C2C] p-6">
+    <div className="min-h-screen bg-background text-foreground p-6">
       <div className="max-w-6xl mx-auto space-y-8">
-        <h1 className="text-4xl font-bold text-[#635FC7]">Tasks</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-4xl font-bold text-primary">Tasks</h1>
+          <ThemeToggle />
+        </div>
 
         <div className="grid gap-6 md:grid-cols-[300px_1fr]">
           <div className="space-y-6">
