@@ -24,7 +24,13 @@ export class MemStorage implements IStorage {
   async createTask(insertTask: InsertTask): Promise<Task> {
     const id = this.currentId++;
     const order = this.tasks.size;
-    const task: Task = { ...insertTask, id, order };
+    const task: Task = { 
+      ...insertTask, 
+      id, 
+      order,
+      dueDate: insertTask.dueDate ? new Date(insertTask.dueDate) : null,
+      description: insertTask.description || null 
+    };
     this.tasks.set(id, task);
     return task;
   }
@@ -32,8 +38,13 @@ export class MemStorage implements IStorage {
   async updateTask(id: number, update: Partial<InsertTask>): Promise<Task> {
     const task = this.tasks.get(id);
     if (!task) throw new Error("Task not found");
-    
-    const updatedTask = { ...task, ...update };
+
+    const updatedTask = { 
+      ...task, 
+      ...update,
+      dueDate: update.dueDate ? new Date(update.dueDate) : task.dueDate,
+      description: update.description ?? task.description
+    };
     this.tasks.set(id, updatedTask);
     return updatedTask;
   }

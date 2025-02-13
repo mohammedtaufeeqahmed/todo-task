@@ -20,6 +20,7 @@ export const insertTaskSchema = createInsertSchema(tasks)
     priority: z.enum(["low", "medium", "high"]),
     category: z.string().min(1),
     status: z.enum(["todo", "in-progress", "done"]),
+    dueDate: z.string().nullable().transform(val => val ? new Date(val) : null),
   });
 
 export type Task = typeof tasks.$inferSelect;
