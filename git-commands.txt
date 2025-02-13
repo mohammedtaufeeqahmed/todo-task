@@ -1,29 +1,55 @@
-# Git initialization commands for your Todo App
+# Git bash commands for Todo Application
+
+# First, navigate to your project directory
+cd your-todo-app-directory
 
 # Initialize a new Git repository
 git init
 
+# Create a .gitignore file (already done in the project)
+# The .gitignore includes: node_modules, dist, build, .env, etc.
+
 # Add all files to staging
 git add .
 
-# Create initial commit
-git commit -m "Initial commit: Todo application with drag-and-drop functionality"
+# Create the initial commit with a descriptive message
+git commit -m "Initial commit: Todo application with drag-and-drop and dark mode"
 
-# To add a remote repository (replace with your repository URL)
-# git remote add origin <your-repository-url>
+# If you have a GitHub/GitLab repository, add it as remote
+# Replace YOUR_USERNAME and REPOSITORY_NAME with your actual values
+git remote add origin https://github.com/YOUR_USERNAME/REPOSITORY_NAME.git
 
-# Push to main branch (after adding remote)
-# git push -u origin main
+# Push your code to the main branch
+git push -u origin main
 
 # Additional useful commands:
-# Check status
-# git status
 
-# View commit history
-# git log
+# To check the status of your repository
+git status
 
-# Create and switch to a new branch
-# git checkout -b feature/new-feature
+# To see the commit history
+git log
 
-# Switch between branches
-# git checkout main
+# To create and switch to a new feature branch
+git checkout -b feature/new-feature
+
+# To switch back to the main branch
+git checkout main
+
+# To pull latest changes from remote
+git pull origin main
+
+# To stage specific changes
+git add filename.ts
+
+# To see what changes are staged
+git diff --staged
+
+# To undo changes in a file
+git checkout -- filename.ts
+
+# To create a new branch and switch to it
+git checkout -b branch-name
+
+# To merge changes from another branch
+git merge branch-name
